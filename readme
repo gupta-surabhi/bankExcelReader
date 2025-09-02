@@ -1,0 +1,10 @@
+1.Create manifest.txt with content:
+  Main-Class: BankExcelSegregator
+2. C:\Users\mishsur\git\bankExcelReader>
+javac -cp "C:\Users\mishsur\git\bankExcelReader\lib\*" -d lib C:\Users\mishsur\git\bankExcelReader\src\BankExcelSegregator.java
+3. C:\Users\mishsur\git\bankExcelReader>
+jar cfm BankExcelSegregator.jar manifest.txt -C src .
+4. C:\Users\mishsur\git\bankExcelReader>
+jar cfm BankExcelSegregator-fat.jar C:\Users\mishsur\git\bankExcelReader\lib\manifest.txt -C lib  .
+
+To run : run.bat
