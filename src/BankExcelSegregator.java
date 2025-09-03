@@ -58,6 +58,9 @@ public class BankExcelSegregator {
 
         System.out.println("\nNumber of rows per bank:");
 
+
+        Workbook outWorkbook = new XSSFWorkbook();
+
         // Write separate Excel files for each bank
         for (Map.Entry<String, List<Row>> entry : bankRows.entrySet()) {
             String bankName = entry.getKey();
@@ -66,8 +69,8 @@ public class BankExcelSegregator {
             System.out.println(bankName + "=" + rows.size());
 
             //Creating new excel workbook and sheet
-            Workbook outWorkbook = new XSSFWorkbook();
-            Sheet outSheet = outWorkbook.createSheet("Sheet1");
+            //Workbook outWorkbook = new XSSFWorkbook();
+            Sheet outSheet = outWorkbook.createSheet(bankName);
 
             // Copy header
             Row outHeader = outSheet.createRow(0);
@@ -111,13 +114,13 @@ public class BankExcelSegregator {
                     }
                 }
             }
-            // Save file
-            String outFileName = outputFilePath + bankName + ".xlsx";
-            try (FileOutputStream fos = new FileOutputStream(outFileName)) {
-                outWorkbook.write(fos);
-            }
-            outWorkbook.close();
         }
+        // Save file
+        String outFileName = outputFilePath + "output.xlsx";
+        try (FileOutputStream fos = new FileOutputStream(outFileName)) {
+            outWorkbook.write(fos);
+        }
+        outWorkbook.close();
 
         System.out.println("\nSegregation completed.");
         System.out.println("Total banks: " + bankRows.size());
