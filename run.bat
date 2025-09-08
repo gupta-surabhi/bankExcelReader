@@ -1,6 +1,6 @@
 @echo off
 REM Compile
-javac -proc:none -cp "lib/*" -d lib src\BankExcelSegregator.java
+javac -proc:none -cp "lib/*" -d lib src\*.java
 echo Compiled successfully!!
 echo.
 
