@@ -47,8 +47,8 @@ public class BankExcelSegregator {
             Row row = sheet.getRow(i);
             if (row == null) continue;
             Cell bankCell = row.getCell(bankColIdx);
-            if (bankCell == null) {
-                System.out.println("Skipping row " + i + " as Bank Name cell is empty");
+            if (bankCell == null || bankCell.getCellType() == CellType.BLANK) {
+                System.out.println("Skipping row " + (i+1) + " as Bank Name cell is empty");
                 continue;
             }
             String bankName = bankCell.getStringCellValue().trim();
