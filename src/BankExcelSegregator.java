@@ -230,11 +230,12 @@ public class BankExcelSegregator {
 
         int maxRows = Math.max(TEAM_NAME_TICKET_COUNT_MAP.size(), Math.max(BANK_NAME_ROWS_MAP.size(), TICKET_AGE_BOUND_DETAILS_BOUND_DETAILS_LIST.size()));
 
-        for(int i=1; i<=maxRows; i++) {
+        for(int i=1; i<=maxRows+1; i++) {
             dashboardSheet.createRow(i);
         }
 
         int outRowNum = 1;
+        int total = 0;
 
         for (Map.Entry<String, Integer> entry : TEAM_NAME_TICKET_COUNT_MAP.entrySet()) {
             Row teamNameTicketCountRow = dashboardSheet.getRow(outRowNum++);
@@ -242,19 +243,34 @@ public class BankExcelSegregator {
             teamNameTicketCountRow.createCell(1).setCellValue(entry.getValue());
             teamNameTicketCountRow.getCell(0).setCellStyle(cellStyle);
             teamNameTicketCountRow.getCell(1).setCellStyle(cellStyle);
+            total = total + entry.getValue();
         }
 
+        Row teamNameTicketCountTotalRow = dashboardSheet.getRow(outRowNum++);
+        teamNameTicketCountTotalRow.createCell(0).setCellValue("Grand Total");
+        teamNameTicketCountTotalRow.createCell(1).setCellValue(total);
+        teamNameTicketCountTotalRow.getCell(0).setCellStyle(headerStyle);
+        teamNameTicketCountTotalRow.getCell(1).setCellStyle(headerStyle);
+
         outRowNum = 1;
+        total = 0;
         for (Map.Entry<String, List<Row>> entry : BANK_NAME_ROWS_MAP.entrySet()) {
             Row bankNameTicketCountRow = dashboardSheet.getRow(outRowNum++);
             bankNameTicketCountRow.createCell(3).setCellValue(entry.getKey());
             bankNameTicketCountRow.createCell(4).setCellValue(entry.getValue().size());
             bankNameTicketCountRow.getCell(3).setCellStyle(cellStyle);
             bankNameTicketCountRow.getCell(4).setCellStyle(cellStyle);
+            total = total + entry.getValue().size();
         }
 
+        Row bankNameTicketCountTotalRow = dashboardSheet.getRow(outRowNum++);
+        bankNameTicketCountTotalRow.createCell(3).setCellValue("Grand Total");
+        bankNameTicketCountTotalRow.createCell(4).setCellValue(total);
+        bankNameTicketCountTotalRow.getCell(3).setCellStyle(headerStyle);
+        bankNameTicketCountTotalRow.getCell(4).setCellStyle(headerStyle);
+
         outRowNum = 1;
-        int total = 0;
+        total = 0;
         for (TicketAgeBoundDetails ticketAgeBoundDetails : TICKET_AGE_BOUND_DETAILS_BOUND_DETAILS_LIST) {
             Row ticketAgeCountRow = dashboardSheet.getRow(outRowNum++);
             ticketAgeCountRow.createCell(6).setCellValue(ticketAgeBoundDetails.getColumnName());
